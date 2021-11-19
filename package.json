@@ -1,7 +1,7 @@
 {
   "name": "first_express_server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "git@github.com:ffrysz/first_express_server.git",
   "author": "Filip Frysz <ffrysz@gmail.com>",
   "license": "MIT",
