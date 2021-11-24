@@ -2,7 +2,7 @@ const express = require('express');
 const { dirname } = require('path');
 const path = require('path');
 const hbs = require('express-handlebars');
-
+const formidableMiddleware = require('express-formidable');
 const app = express();
 
 app.engine('.hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 'main' }));
@@ -20,7 +20,7 @@ app.use('/user/', (req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, '/public')));
-
+app.use(formidableMiddleware());
 app.use(express.urlencoded({ extended: false }));
 
 app.get(['/', '/home'], (req, res) => {
@@ -48,12 +48,13 @@ app.get('/history', (req, res) => {
 });
 
 app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message, file } = req.body;
+  const { author, sender, title, message, file } = req.fields;
 
-  console.log(req.body);
+  console.log(req.fields);
+  console.log(req.files.file.name);
 
-  if (author && sender && title && message && file) {
-    res.render('contact', { isSent: true, fileName: req.body.file });
+  if (author && sender && title && message && req.files.file.name) {
+    res.render('contact', { isSent: true, fileName: req.files.file.name });
   }
   else {
     res.render('contact', { isError: true });
