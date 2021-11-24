@@ -48,10 +48,12 @@ app.get('/history', (req, res) => {
 });
 
 app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message } = req.body;
+  const { author, sender, title, message, file } = req.body;
 
-  if (author && sender && title && message) {
-    res.render('contact', { isSent: true });
+  console.log(req.body);
+
+  if (author && sender && title && message && file) {
+    res.render('contact', { isSent: true, fileName: req.body.file });
   }
   else {
     res.render('contact', { isError: true });
